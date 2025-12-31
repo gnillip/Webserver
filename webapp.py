@@ -89,6 +89,183 @@ def selection():
     SAM:dict = read("SAM.json")
     return render_template("selection.html", username=username, SAM=SAM)
 
+@app.route('/PC')
+def pc():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    return render_template("pc.html")
+
+@app.route('/PC/dach', methods=["GET", "POST"])
+def pc_dach():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    PC = read("PC.json")
+
+    if request.method == "POST":
+        method = request.form["method"]
+
+        if method == "change":
+            name = request.form["name"]
+            motherboard = request.form["motherboard"]
+            cpu = request.form["cpu"]
+            gpu = request.form["gpu"]
+            ram = request.form["ram"]
+            storage = request.form["storage"]
+            os = request.form["os"]
+
+            PC["dach"][name] = {
+                "motherboard": motherboard,
+                "cpu": cpu,
+                "gpu": gpu,
+                "ram": ram,
+                "storage": storage,
+                "os": os
+            }
+
+        elif method == "add":
+            name = request.form["name"]
+            motherboard = request.form["motherboard"]
+            cpu = request.form["cpu"]
+            gpu = request.form["gpu"]
+            ram = request.form["ram"]
+            storage = request.form["storage"]
+            os = request.form["os"]
+
+            PC["dach"][name] = {
+                "motherboard": motherboard,
+                "cpu": cpu,
+                "gpu": gpu,
+                "ram": ram,
+                "storage": storage,
+                "os": os
+            }
+
+        elif method == "delete":
+            name = request.form["name"]
+            PC["dach"].pop(name)
+
+        write("PC.json", PC)
+
+    return render_template("pc_dach.html", PC=PC)
+
+@app.route('/PC/mitte', methods=["GET", "POST"])
+def pc_mitte():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    PC = read("PC.json")
+
+    if request.method == "POST":
+        method = request.form["method"]
+
+        if method == "change":
+            name = request.form["name"]
+            motherboard = request.form["motherboard"]
+            cpu = request.form["cpu"]
+            gpu = request.form["gpu"]
+            ram = request.form["ram"]
+            storage = request.form["storage"]
+            os = request.form["os"]
+
+            PC["mitte"][name] = {
+                "motherboard": motherboard,
+                "cpu": cpu,
+                "gpu": gpu,
+                "ram": ram,
+                "storage": storage,
+                "os": os
+            }
+
+        elif method == "add":
+            name = request.form["name"]
+            motherboard = request.form["motherboard"]
+            cpu = request.form["cpu"]
+            gpu = request.form["gpu"]
+            ram = request.form["ram"]
+            storage = request.form["storage"]
+            os = request.form["os"]
+
+            PC["mitte"][name] = {
+                "motherboard": motherboard,
+                "cpu": cpu,
+                "gpu": gpu,
+                "ram": ram,
+                "storage": storage,
+                "os": os
+            }
+
+        elif method == "delete":
+            name = request.form["name"]
+            PC["mitte"].pop(name)
+
+        write("PC.json", PC)
+
+    return render_template("pc_mitte.html", PC=PC)
+
+@app.route('/PC/keller', methods=["GET", "POST"])
+def pc_keller():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    PC = read("PC.json")
+
+    if request.method == "POST":
+        method = request.form["method"]
+
+        if method == "change":
+            name = request.form["name"]
+            motherboard = request.form["motherboard"]
+            cpu = request.form["cpu"]
+            gpu = request.form["gpu"]
+            ram = request.form["ram"]
+            storage = request.form["storage"]
+            os = request.form["os"]
+
+            PC["keller"][name] = {
+                "motherboard": motherboard,
+                "cpu": cpu,
+                "gpu": gpu,
+                "ram": ram,
+                "storage": storage,
+                "os": os
+            }
+
+        elif method == "add":
+            name = request.form["name"]
+            motherboard = request.form["motherboard"]
+            cpu = request.form["cpu"]
+            gpu = request.form["gpu"]
+            ram = request.form["ram"]
+            storage = request.form["storage"]
+            os = request.form["os"]
+
+            PC["keller"][name] = {
+                "motherboard": motherboard,
+                "cpu": cpu,
+                "gpu": gpu,
+                "ram": ram,
+                "storage": storage,
+                "os": os
+            }
+
+        elif method == "delete":
+            name = request.form["name"]
+            PC["keller"].pop(name)
+
+        write("PC.json", PC)
+
+    return render_template("pc_keller.html", PC=PC)
+
 @app.route('/user')
 def user_page():
     username = session.get("username")
@@ -266,4 +443,12 @@ if __name__ == "__main__":
         if not os.path.exists(f"./static/dateien/{key}"):
             os.mkdir(f"./static/dateien/{key}")
 
-    app.run("127.0.0.1", 5000, False)
+    if not os.path.exists("./PC.json"):
+        with open("PC.json", "w") as data:
+            json.dump({
+                "dach": {},
+                "mitte": {},
+                "keller": {}
+            }, data, indent=4)
+
+    app.run("0.0.0.0", 5000, False)

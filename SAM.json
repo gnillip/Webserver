@@ -15,5 +15,13 @@
             "admins",
             "users"
         ]
+    },
+    "ComTom": {
+        "password": "c750211189887f2418b3d3dbb72efe6c61d89f7b926e22017e04bea01d595b925db5eca413f087eb9fce4cf90a220062f8326fb80e1a4a7ac2744836cc26051e",
+        "locked": false,
+        "groups": [
+            "admins",
+            "users"
+        ]
     }
 }

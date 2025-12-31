@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC >> middle | gnillip</title>
+    <link rel="stylesheet" href="/static/style/style.css">
+</head>
+<body>
+    <div>
+        <h3>PC / middle</h3>
+        <a href="/PC">PC Page</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>motherboard</th>
+                    <th>CPU</th>
+                    <th>GPU</th>
+                    <th>RAM</th>
+                    <th>storage</th>
+                    <th>operating system</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in PC["mitte"].items() %}
+                    <tr>
+                        <form action="/PC/mitte" method="post">
+                            <input type="hidden" name="method" value="change">
+
+                            <!--name-->
+                            <td><input type="text" name="name" value="{{key}}" required></td>
+
+                            <!--motherboard-->
+                            <td><input type="text" name="motherboard" value="{{value['motherboard']}}"></td>
+
+                            <!--cpu-->
+                            <td><input type="text" name="cpu" value="{{value['cpu']}}"></td>
+
+                            <!--gpu-->
+                            <td><input type="text" name="gpu" value="{{value['gpu']}}"></td>
+
+                            <!--ram-->
+                            <td><input type="text" name="ram" value="{{value['ram']}}"></td>
+
+                            <!--storage-->
+                            <td><input type="text" name="storage" value="{{value['storage']}}"></td>
+
+                            <!--os-->
+                            <td><input type="text" name="os" value="{{value['os']}}"></td>
+                        </form>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <form action="/PC/mitte" method="post">
+            <h4>add PC</h4>
+            <input type="hidden" name="method" value="add">
+            <label for="name">name: </label><br>
+            <input type="text" name="name" required><br>
+            <br>
+            <label for="motherboard">motherboard: </label><br>
+            <input type="text" name="motherboard"><br>
+            <br>
+            <label for="cpu">cpu: </label><br>
+            <input type="text" name="cpu"><br>
+            <br>
+            <label for="gpu">gpu: </label><br>
+            <input type="text" name="gpu"><br>
+            <br>
+            <label for="ram">ram: </label><br>
+            <input type="text" name="ram"><br>
+            <label for="storage">Storage: </label><br>
+            <input type="text" name="storage"><br>
+            <br>
+            <label for="os">operating system: </label><br>
+            <input type="text" name="os"><br>
+            <br>
+            <button type="submit">add</button>
+        </form>
+
+        <form action="/PC/mitte" method="post">
+            <h4>delete PC</h4>
+            <input type="hidden" name="method" value="delete">
+            <label for="name">name: </label><br>
+            <input type="text" name="name" required><br>
+            <button type="submit">delete</button>
+        </form>
+    </div>
+</body>
+</html>

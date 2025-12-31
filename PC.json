@@ -1,0 +1,14 @@
+{
+    "dach": {
+        "BennettPC": {
+            "motherboard": "ASUS X370 Taichi",
+            "cpu": "AMD Pro 1700X",
+            "gpu": "AMD RX 6700 XT",
+            "ram": "32GB DDR4 2400-3000 MHz",
+            "storage": "1TB M2 SSD;  500GB M2 SSD; 1TB HDD; 4TB HDD Western Digital",
+            "os": "Windows; Debian; Arch"
+        }
+    },
+    "mitte": {},
+    "keller": {}
+}
