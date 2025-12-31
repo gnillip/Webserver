@@ -1,5 +1,5 @@
 # Imports
-from flask import Flask, render_template, redirect, jsonify, abort, request, session
+from flask import Flask, render_template, redirect, jsonify, abort, send_file, request, session
 import os, hashlib, json
 
 # Variables
@@ -39,6 +39,10 @@ def load_dateien(username:str):
     return temp
 
 # Flask build
+@app.route('/favicon.ico')
+def favicon():
+    return send_file("./static/favicon.ico")
+
 @app.route('/')
 def startseite():
     return render_template("startseite.html")
