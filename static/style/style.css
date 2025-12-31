@@ -1,0 +1,91 @@
+div {
+    font-size: 200%;
+}
+
+h3 {
+    background-color: gray;
+    border-radius: 5px;
+    color: yellow;
+}
+
+h4 {
+    background-color: grey;
+    border-radius: 5px;
+    color: rgb(210, 210, 0);
+}
+
+a {
+    background-color: rgb(211, 193, 0);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+    color: black;
+}
+a:hover {
+    background-color: rgb(174, 145, 0);
+    color: black;
+}
+
+button {
+    background-color: rgb(195, 176, 0);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 120%;
+}
+button:hover {
+    background-color: rgb(129, 105, 0);
+}
+
+input:not(.login input)  {
+    height: 50px;
+    width: 500px;
+    font-size: 16px;
+}
+
+.login {
+    background-color: rgb(171, 171, 171);
+    width: 500px;
+    font-size: 150%;
+}
+
+/* Allgemeine Stile für die Tabelle */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Stile für Tabellenkopf */
+th {
+  background-color: #af4c4c;
+  color: white;
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+}
+
+/* Stile für Tabellenzellen */
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Wechselnde Hintergrundfarbe für Zeilen */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover-Effekt für Zeilen */
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Rahmen für die Tabelle */
+table, th, td {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}

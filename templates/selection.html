@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>selection | gnillip</title>
+</head>
+<body>
+    <div>
+        <h3>selection</h3>
+        <p>You can now select between cool Pages</p>
+
+        <a href="/admin"><button
+            {% if "admins" not in SAM[usernane]["groups"] %}
+            disabled hidden
+            {% endif %}
+            >admin</button></a>
+        <a href="/user">Userpage</a><br>
+        <a href="/PC">Computerpage</a><br>
+    </div>
+</body>
+</html>

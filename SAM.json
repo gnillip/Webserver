@@ -1,0 +1,11 @@
+{
+    "root": {
+        "password": "5c22d1df4bfbb2681e09e8deca971434ccd8f8a0895d20386c1a43245c1dd1ae917e24ed127edccf7fd67fc92e1b0a8622e7cd170f948232fe1db99369db3128",
+        "locked": false,
+        "groups": [
+            "root",
+            "admins",
+            "users"
+        ]
+    }
+}
