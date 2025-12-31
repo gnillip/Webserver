@@ -451,4 +451,4 @@ if __name__ == "__main__":
                 "keller": {}
             }, data, indent=4)
 
-    app.run("0.0.0.0", 5000, False)
+    app.run("127.0.0.1", 5000, False)
