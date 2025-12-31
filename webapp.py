@@ -32,6 +32,12 @@ def security(username:str, admin:bool=False) -> None:
         if "admins" not in SAM[username]["groups"]:
             abprt(403, "You need admin-status to do that.")
 
+def load_dateien(username:str):
+    temp = []
+    for entry in os.listdir(f"./static/dateien/{username}"):
+        temp.append(entry)
+    return temp
+
 # Flask build
 @app.route('/')
 def startseite():
@@ -70,6 +76,7 @@ def registration():
         "groups": ["users"]
     }
     write("SAM.json", SAM)
+    os.mkdir(f"./static/dateien/{username}")
     return redirect('/selection')
 
 @app.route('/selection')
@@ -81,6 +88,66 @@ def selection():
 
     SAM:dict = read("SAM.json")
     return render_template("selection.html", username=username, SAM=SAM)
+
+@app.route('/user')
+def user_page():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+    dateien = load_dateien(username)
+
+    return render_template("user.html", username=username, dateien=dateien)
+
+@app.route('/user/change_pw', methods=["POST"])
+def user_change_pw():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    SAM = read("SAM.json")
+    password = request.form["password"]
+
+    SAM[username]["password"] = hashlib.sha512(password.encode()).hexdigest()
+    write("SAM.json", SAM)
+    session.clear()
+    return redirect('/')
+
+@app.route('/user/upload', methods=["POST"])
+def user_upload():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    file = request.files["file"]
+    file.save(f"./static/dateien/{username}/{file.filename}")
+    return redirect('/user')
+
+@app.route('/user/send', methods={"POST"})
+def user_send():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    file = request.form["file"]
+    sendto = request.form["sendto"]
+
+    os.system(f"cp ./static/dateien/{username}/{file} ./static/dateien/{sendto}/{file}")
+    return redirect('/user')
+
+@app.route('/user/delete', methods=["POST"])
+def user_delete():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username)
+
+    file = request.form["file"]
+    os.remove(f"./static/dateien/{username}/{file}")
+    return redirect('/user')
 
 @app.route('/get_hash')
 def get_hash_js():
@@ -170,6 +237,7 @@ def admin_add():
         "groups": groups
     }
     write("SAM.json", SAM)
+    os.mkdir(f"./static/dateien/{user}")
     return redirect('/admin')
 
 @app.route('/admin/delete', methods=["POST"])
@@ -187,8 +255,15 @@ def admin_delete():
     
     SAM.pop(user)
     write("SAM.json", SAM)
+    os.rmdir(f"./static/dateien/{user}")
     return redirect('/admin')
 
 # Starting sequence
 if __name__ == "__main__":
+
+    SAM = read("SAM.json")
+    for key, value in SAM.items():
+        if not os.path.exists(f"./static/dateien/{key}"):
+            os.mkdir(f"./static/dateien/{key}")
+
     app.run("127.0.0.1", 5000, False)

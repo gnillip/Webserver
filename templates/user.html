@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user | gnillip</title>
+    <link rel="stylesheet" href="/static/style/style.css">
+</head>
+<body>
+    <div>
+        <h3>User - Page</h3>
+        <p>Hello, {{username}}</p>
+
+        <form action="/user/change_pw" method="post">
+            <h4>Change Password</h4>
+            <label for="password">new password: </label><br>
+            <input type="password" name="password" required><br>
+            <button type="submit">change</button>
+        </form>
+
+        <form action="/user/upload" method="post" enctype="multipart/form-data">
+            <h4>upload</h4>
+            <label for="file">select the file: </label><br>
+            <input type="file" name="file" required><br>
+            <button type="submit">upload</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>send</th>
+                    <th>download</th>
+                    <th>delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in dateien %}
+                    <tr>
+                        <td>{{file}}</td>
+                        <td><form action="/user/send" method="post">
+                            <input type="hidden" name="file" value="{{file}}">
+                            <label for="sendto">to who: </label>
+                            <input type="text" name="sendto" required><br>
+                            <button type="submit">send</button>
+                        </form></td>
+                        <td><a href="/static/dateien/{{username}}/{{file}}" download>download</a></td>
+                        <td><form action="/user/delete" method="post">
+                            <input type="hidden" name="file" value="{{file}}">
+                            <button type="submit">delete</button>
+                        </form></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
