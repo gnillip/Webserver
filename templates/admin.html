@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin | gnillip</title>
+    <link rel="stylesheet" href="/static/style/style.css">
+    <script src="/static/func/func.js"></script>
+</head>
+<body>
+    <div>
+        <h3>Admin - Page</h3>
+        <p>Hello, {{username}}</p>
+
+        <h4>SAM (with change possible)</h4>
+        <p>(password encryption is under this grid)</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>username</th>
+                    <th>locked</th>
+                    <th>groups</th>
+                    <th>password - hash (sha512)</th>
+                    <th>change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in SAM.items() %}
+                    <tr>
+                        <form action="/admin/change" method="post">
+                            <td><input type="text" name="username" value="{{key}}"></td>
+                            <td><input type="text" name="locked" value="{{value['locked']}}"></td>
+                            <td><input type="text" name="groups" value="{{value['groups']}}"></td>
+                            <td><input type="text" name="password" value="{{value['password']}}"></td>
+                            <td><button type="submit">change</button></td>
+                        </form>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <form action="/admin/add" method="post">
+            <h4>Add user</h4>
+            <label for="username">username: </label><br>
+            <input type="text" name="username" required><br>
+            <br>
+            <label for="locked">locked: </label><br>
+            <input type="text" name="locked" required><br>
+            <br>
+            <label for="groups">groups: </label><br>
+            <input type="text" name="groups" required><br>
+            <br>
+            <label for="password">password-hash: </label><br>
+            <input type="text" name="password" required><br>
+            <br>
+            <button type="submit">add</button>
+        </form>
+
+        <h4>get Hash</h4>
+        <label for="inputValue">your text: </label>
+        <input type="text" id="inputValue", placeholder="type yout value here..."><br>
+        <button onclick="get_hash()">show Hash</button><br>
+        <p id="hashResult">Here will be the hash</p>
+    </div>
+</body>
+</html>

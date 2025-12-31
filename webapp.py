@@ -1,5 +1,5 @@
 # Imports
-from flask import Flask, render_template, redirect, abort, request, session
+from flask import Flask, render_template, redirect, jsonify, abort, request, session
 import os, hashlib, json
 
 # Variables
@@ -82,7 +82,63 @@ def selection():
     SAM:dict = read("SAM.json")
     return render_template("selection.html", username=username, SAM=SAM)
 
+@app.route('/get_hash')
+def get_hash_js():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username, True)
+
+    value = request.args.get('value')
+
+    if not value:
+        return jsonify({'error': 'no value was given'}), 400
+    
+    hash_result = hashlib.sha512(value.encode()).hexdigest()
+    return jsonify({'hash': hash_result})
+
+@app.route('/admin')
+def admin():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username, True)
+
+    SAM:dict = read("SAM.json")
+    return render_template("admin.html", SAM=SAM, username=username)
+
+@app.route('/admin/add', methods=["POST"])
+def admin_add():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username, True)
+
+    SAM:dict = read("SAM.json")
+    user = request.form["username"]
+    locked = request.form["locked"]
+    groups = request.form["groups"]
+    password = request.form["password"]
+
+    if locked.lower() == "false":
+        locked = False
+    else:
+        locked = True
+    
+    if "," in groups:
+        groups = groups.split(",")
+    
+    if user in SAM:
+        abort(401, "This user already exists!")
+    
+    SAM[user] = {
+        "password": password,
+        "locked": locked,
+        "groups": groups
+    }
+    write("SAM.json", SAM)
+    return redirect('/admin')
 
 # Starting sequence
 if __name__ == "__main__":
-    app.run("0.0.0.0", 8080, False)
+    app.run("127.0.0.1", 5000, False)

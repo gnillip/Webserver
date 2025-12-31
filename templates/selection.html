@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>selection | gnillip</title>
+    <link rel="stylesheet" href="/static/style/style.css">
 </head>
 <body>
     <div>
         <h3>selection</h3>
+        <p>Hi, {{username}}</p>
         <p>You can now select between cool Pages</p>
 
         <a href="/admin"><button
-            {% if "admins" not in SAM[usernane]["groups"] %}
+            {% if 'admins' not in SAM[username]["groups"] %}
             disabled hidden
             {% endif %}
-            >admin</button></a>
+            >admin</button></a><br>
         <a href="/user">Userpage</a><br>
         <a href="/PC">Computerpage</a><br>
     </div>
