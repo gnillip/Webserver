@@ -7,5 +7,13 @@
             "admins",
             "users"
         ]
+    },
+    "gnillip": {
+        "password": "fcdeb7ce07b19634fa10fb766ca4ed5e099e5fbb7b3d7c4a2c5d7c1029a82f7947c3551d17cf31f520f84ec383641d939d5fc3311a041b0c17842cb47211196c",
+        "locked": false,
+        "groups": [
+            "admins",
+            "users"
+        ]
     }
 }

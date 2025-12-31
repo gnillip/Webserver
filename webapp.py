@@ -107,6 +107,37 @@ def admin():
     SAM:dict = read("SAM.json")
     return render_template("admin.html", SAM=SAM, username=username)
 
+@app.route('/admin/change', methods=["POST"])
+def admin_change():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username, True)
+
+    SAM:dict = read("SAM.json")
+    user = request.form["username"]
+    locked = request.form["locked"]
+    groups = request.form["groups"]
+    password = request.form["password"]
+
+    if locked.lower() == "false":
+        locked = False
+    else:
+        locked = True
+    
+    if "," in groups:
+        groups = groups.split(",")
+    else:
+        groups = [groups.split(",")[0]]
+    
+    SAM[user] = {
+        "password": password,
+        "locked": locked,
+        "groups": groups
+    }
+    write("SAM.json", SAM)
+    return redirect('/admin')
+
 @app.route('/admin/add', methods=["POST"])
 def admin_add():
     username = session.get("username")
@@ -127,6 +158,8 @@ def admin_add():
     
     if "," in groups:
         groups = groups.split(",")
+    else:
+        groups = [groups.split(",")[0]]
     
     if user in SAM:
         abort(401, "This user already exists!")
@@ -136,6 +169,23 @@ def admin_add():
         "locked": locked,
         "groups": groups
     }
+    write("SAM.json", SAM)
+    return redirect('/admin')
+
+@app.route('/admin/delete', methods=["POST"])
+def admin_delete():
+    username = session.get("username")
+    if not username:
+        return redirect('/')
+    security(username, True)
+
+    user = request.form["user"]
+    SAM = read("SAM.json")
+
+    if user not in SAM:
+        abort(401, "This user doen't exist. Maybe you mistyped?")
+    
+    SAM.pop(user)
     write("SAM.json", SAM)
     return redirect('/admin')
 
