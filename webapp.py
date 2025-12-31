@@ -438,6 +438,9 @@ def admin_delete():
 # Starting sequence
 if __name__ == "__main__":
 
+    if not os.path.exists("./static/dateien"):
+        os.mkdir("./static/dateien")
+
     SAM = read("SAM.json")
     for key, value in SAM.items():
         if not os.path.exists(f"./static/dateien/{key}"):
