@@ -12,6 +12,7 @@
         <p>Hi, {{username}}</p>
         <p>You can now select between cool Pages</p>
 
+        <a href="/logout"><button>logout</button></a>
         <a href="/admin"><button
             {% if 'admins' not in SAM[username]["groups"] %}
             disabled hidden

@@ -43,6 +43,11 @@ def load_dateien(username:str):
 def favicon():
     return send_file("./static/favicon.ico")
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
 @app.route('/')
 def startseite():
     return render_template("startseite.html")
