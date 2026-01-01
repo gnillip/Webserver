@@ -5,6 +5,7 @@ import os, hashlib, json
 # Variables
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024 #500 MB
 
 # Functions
 def read(file:str) -> dict:
